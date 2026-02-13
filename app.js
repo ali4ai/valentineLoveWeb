@@ -23,11 +23,11 @@ if (isFirebaseConfigured) {
 }
 
 const defaultPortraits = [
-  "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1519736709093-9f90a9591489?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1519736709093-9f90a9591489?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
 ];
 
 const customPortraits = [
@@ -70,18 +70,102 @@ const storyCards = [
 ];
 
 const questions = [
-  "When did you first feel I am special?",
-  "What is your favorite memory with me?",
-  "What do you love most about us?",
-  "Who is the better programmer? 😄",
-  "Which language best describes our love? (Python/Java/C++/LoveScript ❤️)",
-  "Where do you see us in 5 years?",
-  "Are you ready for lifetime debugging with me?",
+  {
+    section: "Section 1 — Our Love Story (Past & Memories)",
+    key: "firstSpecialMoment",
+    prompt: "When did you first feel I was special?",
+    type: "text",
+  },
+  {
+    section: "Section 1 — Our Love Story (Past & Memories)",
+    key: "favoriteMemory",
+    prompt: "What is your favorite memory of us together?",
+    type: "paragraph",
+  },
+  {
+    section: "Section 1 — Our Love Story (Past & Memories)",
+    key: "smileMoment",
+    prompt: "Which moment made you smile the most because of me?",
+    type: "text",
+  },
+  {
+    section: "Section 1 — Our Love Story (Past & Memories)",
+    key: "oneWordRelationship",
+    prompt: "How would you describe our relationship in one word?",
+    type: "text",
+  },
+  {
+    section: "Section 1 — Our Love Story (Past & Memories)",
+    key: "funniestPlayfulThing",
+    prompt: "What is the funniest or most playful thing we’ve done together?",
+    type: "text",
+  },
+  {
+    section: "Section 2 — Present Feelings",
+    key: "loveMost",
+    prompt: "What do you love most about me?",
+    type: "text",
+  },
+  {
+    section: "Section 2 — Present Feelings",
+    key: "qualityLoved",
+    prompt: "Which of my qualities makes you feel loved and cared for?",
+    type: "text",
+  },
+  {
+    section: "Section 2 — Present Feelings",
+    key: "happinessScale",
+    prompt: "How happy do you feel when we are together?",
+    type: "slider",
+    min: 1,
+    max: 10,
+  },
+  {
+    section: "Section 2 — Present Feelings",
+    key: "emojiFeeling",
+    prompt: "Which emoji best describes your feelings for me right now?",
+    type: "choice",
+    options: ["❤️", "😍", "🥰", "💕", "🌹"],
+  },
+  {
+    section: "Section 2 — Present Feelings",
+    key: "firstHeartFeeling",
+    prompt: "When you think of us, what feeling comes to your heart first?",
+    type: "text",
+  },
+  {
+    section: "Section 3 — Future Together",
+    key: "usIn5Years",
+    prompt: "Where do you see us in 5 years?",
+    type: "paragraph",
+  },
+  {
+    section: "Section 3 — Future Together",
+    key: "futureGoals",
+    prompt: "What dreams or goals do you want us to achieve together?",
+    type: "paragraph",
+  },
+  {
+    section: "Section 3 — Future Together",
+    key: "futureLifeFeeling",
+    prompt: "What do you hope our life together will feel like?",
+    type: "text",
+  },
+  {
+    section: "Section 3 — Future Together",
+    key: "futureMemories",
+    prompt: "What kind of memories do you want us to create in the coming years?",
+    type: "paragraph",
+  },
+  {
+    section: "Section 3 — Future Together",
+    key: "wishOrDua",
+    prompt: "Write one wish or prayer (dua) for our love and future together.",
+    type: "paragraph",
+  },
 ];
 
-const answerEmojis = ["🥰", "💭", "❤️", "👩‍💻", "💘", "🏡", "💍"];
-
-const answers = Array(questions.length).fill("");
+const answers = {};
 let storyIndex = 0;
 let questionIndex = 0;
 
@@ -90,7 +174,7 @@ const typewriter = document.getElementById("typewriter");
 const daysTogether = document.getElementById("daysTogether");
 const loveMeter = document.getElementById("loveMeter");
 const questionText = document.getElementById("questionText");
-const answerInput = document.getElementById("answerInput");
+const answerInputWrap = document.getElementById("answerInputWrap");
 const progressBar = document.getElementById("progressBar");
 const compiledMessage = document.getElementById("compiledMessage");
 const successStatus = document.getElementById("successStatus");
@@ -98,6 +182,7 @@ const musicToggle = document.getElementById("musicToggle");
 const bgMusic = document.getElementById("bgMusic");
 const portraitGallery = document.getElementById("portraitGallery");
 const emojiReaction = document.getElementById("emojiReaction");
+const questionSectionTag = document.getElementById("questionSectionTag");
 
 function showSection(id) {
   Object.values(sections).forEach((el) => {
@@ -114,23 +199,25 @@ function safePortrait(index) {
 
 function renderStory() {
   const card = storyCards[storyIndex];
+  const fallback = defaultPortraits[storyIndex] || defaultPortraits[0];
   storyCard.innerHTML = `
     <div class="story-image-wrap">
-      <img src="${safePortrait(storyIndex)}" alt="Love memory card ${storyIndex + 1}" loading="lazy" onerror="this.onerror=null;this.src='${defaultPortraits[storyIndex] || defaultPortraits[0]}'" />
+      <img src="${safePortrait(storyIndex)}" alt="Love memory card ${storyIndex + 1}" loading="lazy" onerror="this.onerror=null;this.src='${fallback}'" />
     </div>
     <div class="story-content">
       <h2>${card.title}</h2>
       <p>${card.body}</p>
       <p><strong>Card ${storyIndex + 1}/${storyCards.length}</strong></p>
+      <p class="small-hint">Optimized for love-letter portraits (1024×1536) with text.</p>
     </div>`;
 }
 
 function renderPortraitGallery() {
   portraitGallery.innerHTML = storyCards
-    .map(
-      (_, idx) =>
-        `<div class="portrait-card"><img src="${safePortrait(idx)}" alt="Memory portrait ${idx + 1}" loading="lazy" onerror="this.onerror=null;this.src='${defaultPortraits[idx] || defaultPortraits[0]}'" /></div>`
-    )
+    .map((_, idx) => {
+      const fallback = defaultPortraits[idx] || defaultPortraits[0];
+      return `<div class="portrait-card"><img src="${safePortrait(idx)}" alt="Memory portrait ${idx + 1}" loading="lazy" onerror="this.onerror=null;this.src='${fallback}'" /></div>`;
+    })
     .join("");
 }
 
@@ -158,17 +245,75 @@ function setupMemories() {
   }, 300);
 }
 
+function getCurrentValue() {
+  const q = questions[questionIndex];
+  if (q.type === "choice") {
+    const checked = answerInputWrap.querySelector('input[name="emojiChoice"]:checked');
+    return checked ? checked.value : "";
+  }
+  if (q.type === "slider") {
+    const slider = answerInputWrap.querySelector("input[type='range']");
+    return slider ? slider.value : "";
+  }
+  const input = answerInputWrap.querySelector("input, textarea");
+  return input ? input.value.trim() : "";
+}
+
+function renderInputForQuestion(q) {
+  const existingValue = answers[q.key] ?? "";
+
+  if (q.type === "paragraph") {
+    answerInputWrap.innerHTML = `<textarea id="dynamicAnswer" rows="4" placeholder="Write your answer...">${existingValue}</textarea>`;
+    return;
+  }
+
+  if (q.type === "slider") {
+    const value = existingValue || String(q.max);
+    answerInputWrap.innerHTML = `
+      <div class="slider-wrap">
+        <input id="dynamicAnswer" type="range" min="${q.min}" max="${q.max}" value="${value}" />
+        <p id="sliderValue">${value}/10</p>
+      </div>`;
+
+    const slider = document.getElementById("dynamicAnswer");
+    const sliderValue = document.getElementById("sliderValue");
+    slider.addEventListener("input", () => {
+      sliderValue.textContent = `${slider.value}/10`;
+    });
+    return;
+  }
+
+  if (q.type === "choice") {
+    answerInputWrap.innerHTML = `<div class="choice-grid">${q.options
+      .map((opt) => {
+        const checked = existingValue === opt ? "checked" : "";
+        return `<label class="choice-pill"><input type="radio" name="emojiChoice" value="${opt}" ${checked} /><span>${opt}</span></label>`;
+      })
+      .join("")}</div>`;
+    return;
+  }
+
+  answerInputWrap.innerHTML = `<input id="dynamicAnswer" type="text" placeholder="Type your answer..." value="${existingValue}" />`;
+}
+
 function renderQuestion() {
-  questionText.textContent = questions[questionIndex];
-  answerInput.value = answers[questionIndex] || "";
+  const q = questions[questionIndex];
+  questionText.textContent = q.prompt;
+  questionSectionTag.textContent = q.section;
   progressBar.style.width = `${((questionIndex + 1) / questions.length) * 100}%`;
-  emojiReaction.textContent = answerEmojis[questionIndex] || "😊";
+  emojiReaction.textContent = q.type === "choice" ? "💖" : q.type === "slider" ? "😊" : "🥰";
+  renderInputForQuestion(q);
+}
+
+function saveCurrentAnswer() {
+  const q = questions[questionIndex];
+  answers[q.key] = getCurrentValue();
 }
 
 async function saveResponses() {
   const payload = {
     partnerName: "Sumia",
-    answers: Object.fromEntries(questions.map((_, i) => [`q${i + 1}`, answers[i]])),
+    answers,
     submittedAt: isFirebaseConfigured ? serverTimestamp() : new Date().toISOString(),
     deviceInfo: navigator.userAgent,
   };
@@ -249,15 +394,16 @@ document.getElementById("toQuestions").addEventListener("click", () => {
 });
 
 document.getElementById("prevQuestion").addEventListener("click", () => {
-  answers[questionIndex] = answerInput.value.trim();
+  saveCurrentAnswer();
   questionIndex = Math.max(0, questionIndex - 1);
   renderQuestion();
 });
 
 document.getElementById("nextQuestion").addEventListener("click", async () => {
-  answers[questionIndex] = answerInput.value.trim();
-  if (!answers[questionIndex]) {
-    answerInput.focus();
+  saveCurrentAnswer();
+  const currentQuestion = questions[questionIndex];
+
+  if (!answers[currentQuestion.key]) {
     return;
   }
 
@@ -268,7 +414,7 @@ document.getElementById("nextQuestion").addEventListener("click", async () => {
   }
 
   showSection("ending");
-  compiledMessage.textContent = `Your answers made this journey even more special. My favorite part: "${answers[1]}". Thank you for being my peace, my partner, and my forever love.`;
+  compiledMessage.textContent = `Your words made this journey even more special. My favorite memory from your answers: "${answers.favoriteMemory || "Every moment with you"}". Thank you for being my peace, my partner, and my forever love.`;
   launchConfetti();
 
   try {

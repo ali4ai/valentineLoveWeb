@@ -3,9 +3,9 @@
 A single-page romantic interactive website with:
 
 - Landing page with romantic entry
-- Story slide deck/timeline cards with **portrait images**
+- Story slide deck/timeline cards with portrait images (supports 1024×1536 love-letter cards)
 - Memories and love message section + portrait gallery
-- Multi-step questionnaire with emoji reactions
+- Multi-step questionnaire with text, paragraph, slider, and emoji multiple-choice questions
 - Firebase Firestore submission support
 - Final surprise screen with confetti
 
@@ -27,8 +27,7 @@ Put your portrait images in this folder:
 - `images/cards/card4.jpg`
 - `images/cards/card5.jpg`
 
-The app uses these by default for the 5 love-story cards and memory gallery.
-If any file is missing, it automatically falls back to built-in sample portraits.
+These are displayed using `object-fit: contain`, so portrait cards with text (like 1024×1536) are shown fully without cropping important words.
 
 ## Firebase setup
 
