@@ -3,98 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>For My Future Wife Sumia ❤️</title>
+    <title>Our Love Story ❤️</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="bg-hearts" aria-hidden="true"></div>
+    <audio id="bgMusic" loop></audio>
 
-    <main>
-      <section id="landing" class="section active center">
-        <h1>For My Future Wife Sumia ❤️</h1>
-        <p>A small digital journey made with love by Ali.</p>
-        <p class="landing-tagline">A circle of our memories, and a slider of my heart.</p>
+    <button id="musicToggle" class="music-btn">🎵 Music: Off</button>
 
-        <div class="wheel-wrap">
-          <div id="photoWheel" class="photo-wheel"></div>
-          <div class="wheel-center">Ali ❤️ Sumia</div>
-        </div>
+    <section class="hero full-screen" id="hero">
+      <img id="heroBg" class="hero-bg" alt="Together background" />
+      <div class="overlay"></div>
+      <div class="floating-hearts" aria-hidden="true"></div>
+      <div class="hero-content fade-in">
+        <h1>Our Love Story ❤️</h1>
+        <h2>Valentine 2026</h2>
+        <p>Two hearts… One destiny</p>
+      </div>
+    </section>
 
-        <button id="startJourney" class="primary-btn">Start Our Love Journey</button>
-      </section>
+    <section class="split-gallery section">
+      <div class="side">
+        <h3>My World</h3>
+        <div id="leftPhotos" class="polaroid-grid"></div>
+      </div>
+      <div class="center-text">Two different journeys that led to each other ❤️</div>
+      <div class="side">
+        <h3>Your World</h3>
+        <div id="rightPhotos" class="polaroid-grid"></div>
+      </div>
+    </section>
 
-      <section id="story" class="section hidden">
-        <h2 class="story-title">Our Love Story</h2>
-        <div class="swiper love-swiper" id="loveSwiper">
-          <div class="swiper-wrapper" id="storySlides"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-pagination"></div>
-        </div>
+    <section class="merge section">
+      <div id="mergeLeft" class="merge-col"></div>
+      <div class="heart-frame pulse">
+        <img id="togetherPhoto" alt="Together" />
+      </div>
+      <div id="mergeRight" class="merge-col"></div>
+      <div class="sparkles" aria-hidden="true"></div>
+    </section>
 
-        <button id="showFinal" class="primary-btn">Open Final Message</button>
-      </section>
+    <section class="memory section">
+      <h3>Memory Gallery</h3>
+      <div id="masonry" class="masonry"></div>
+    </section>
 
-      <section id="final" class="section center hidden">
-        <article class="glass final-message">
-          <h1>My Dearest Sumia ❤️</h1>
+    <section class="message section">
+      <article class="letter">
+        <h3>Love Message 💌</h3>
+        <p id="typewriter"></p>
+      </article>
+      <div class="petals" aria-hidden="true"></div>
+    </section>
 
-          <p>
-          If you are reading this, it means you have reached the end of this small journey I created… 
-          but the truth is, our real journey is just beginning.
-          </p>
+    <section class="ending section">
+      <div class="big-heart pulse">
+        <img id="endingPhoto" alt="Forever us" />
+      </div>
+      <button id="foreverBtn" class="primary-btn">Forever Us</button>
+      <p id="finalQuote" class="hidden">“Every road in my life leads to you. Forever begins with us.” ❤️</p>
+    </section>
 
-          <p>
-          From that unexpected message that changed everything… to every moment we have shared since then… 
-          you have filled my life with happiness I never knew I was missing. 
-          You came into my world quietly, but your love changed my entire life beautifully.
-          </p>
+    <canvas id="fxCanvas"></canvas>
 
-          <p>
-          You are not just someone I love…  
-          You are my comfort when I feel tired,  
-          My smile when life feels heavy,  
-          And my peace when the world feels confusing.
-          </p>
-
-          <p>
-          Every day with you teaches me how beautiful love can be. 
-          You make my heart feel safe, understood, and complete. 
-          I thank Allah for writing your name in my destiny, because loving you has been the most beautiful blessing of my life.
-          </p>
-
-          <p>
-          I promise to stand beside you in happiness and in hardship. 
-          I promise to respect you, protect your heart, and support your dreams. 
-          I promise to be your partner, your best friend, and the person you can always rely on.
-          </p>
-
-          <p>
-          Sumia, you are my today, my tomorrow, and every dream I have for the future.
-          </p>
-
-          <p>
-          No matter where life takes us, one thing will always remain true…  
-          My heart will always choose you.
-          </p>
-
-          <div class="signature">
-          Happy Valentine’s Day ❤️ <br>
-          Forever Yours, <br>
-          Ali
-          </div>
-          <button id="restartJourney" class="ghost-btn">Replay Journey</button>
-        </article>
-      </section>
-    </main>
-
-    <canvas id="confettiCanvas"></canvas>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

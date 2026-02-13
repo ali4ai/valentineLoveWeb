@@ -1,13 +1,13 @@
-# Valentine Website ❤️
+# Romantic Valentine Website ❤️
 
-This version is focused on:
+This build now follows a 6-section storytelling flow:
 
-- A modern, responsive 11-card romantic slider
-- Elegant love messages on each slide
-- Portrait image support for slider cards (`card1.png` ... `card11.png`)
-- Bigger rotating circular wheel images on landing screen
-- Arrows, pagination dots, autoplay, hover pause, and touch swipe
-- Final romantic message reveal
+1. Romantic Hero Intro (full-screen)
+2. Two Worlds split gallery
+3. Love Merge animation
+4. Memory collage gallery
+5. Love Message with typewriter
+6. Final Romantic Ending with heart burst
 
 ## Run locally
 
@@ -17,29 +17,23 @@ python3 -m http.server 4173
 
 Open: `http://localhost:4173`
 
-## Add your images
+## Add your own images
 
-Slider cards (portrait):
+Primary cards:
+- `images/cards/card1.png` ... `images/cards/card11.png`
 
-- `images/cards/card1.png`
-- `images/cards/card2.png`
-- `images/cards/card3.png`
-- `images/cards/card4.png`
-- `images/cards/card5.png`
-- `images/cards/card6.png`
-- `images/cards/card7.png`
-- `images/cards/card8.png`
-- `images/cards/card9.png`
-- `images/cards/card10.png`
-- `images/cards/card11.png`
+Personal photos:
+- `images/personal/card1.jpg` ... `images/personal/card6.jpg`
 
-Landing wheel (personal):
+## Add your own audio
 
-- `images/personal/card1.jpg`
-- `images/personal/card2.jpg`
-- `images/personal/card3.jpg`
-- `images/personal/card4.jpg`
-- `images/personal/card5.jpg`
-- `images/personal/card6.jpg`
+Place your file (example):
+- `audio/our-song.mp3`
 
-If files are missing, fallback romantic images are shown automatically.
+Then in `app.js` set:
+
+```js
+const customAudio = "audio/our-song.mp3";
+```
+
+If files are missing, fallback images appear automatically.

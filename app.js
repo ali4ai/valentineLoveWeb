@@ -1,17 +1,3 @@
-const cardData = [
-  { title: "🌸 The Unexpected Beginning", message: "From one small moment, our forever story quietly began." },
-  { title: "🌹 The Beautiful Secret", message: "My heart knew your name before I ever said it." },
-  { title: "🌺 The Moment Truth Bloomed", message: "Love became real the day your smile became my home." },
-  { title: "💕 Falling Deeper", message: "With every memory, I found new reasons to love you more." },
-  { title: "🌷 Your Beauty", message: "Your soul is the most beautiful place my heart has known." },
-  { title: "🌙 My Gratitude", message: "Every dua of mine carries your name with gratitude." },
-  { title: "🤍 My Peace", message: "You are the calm that softens every storm in me." },
-  { title: "💍 My Future With You", message: "I dream of building every tomorrow with you." },
-  { title: "🌸 My Duas For You", message: "May our love always be protected, blessed, and pure." },
-  { title: "🌟 917 Days Together", message: "917 days of memories, laughter, growth, and endless love." },
-  { title: "❤️ My Forever Valentine", message: "You are my today, tomorrow, and forever." },
-];
-
 const customImages = Array.from({ length: 11 }, (_, i) => `images/cards/card${i + 1}.png`);
 const personalImages = Array.from({ length: 6 }, (_, i) => `images/personal/card${i + 1}.jpg`);
 
@@ -29,100 +15,121 @@ const fallbackImages = [
   "https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=1400&q=80",
 ];
 
-const sections = {
-  landing: document.getElementById("landing"),
-  story: document.getElementById("story"),
-  final: document.getElementById("final"),
-};
+// Put your own audio file here, e.g. "audio/our-song.mp3"
+const customAudio = "audio/our-song.mp3";
 
-const storySlides = document.getElementById("storySlides");
-const photoWheel = document.getElementById("photoWheel");
-let swiperInstance = null;
+const captions = [
+  "My favorite smile",
+  "The day everything changed",
+  "Forever begins here",
+  "Our happiest memory",
+  "A moment of destiny",
+  "Love in every glance",
+  "My safe place",
+  "My answered prayer",
+  "Our forever chapter",
+];
 
-function showSection(id) {
-  Object.values(sections).forEach((el) => {
-    el.classList.remove("active");
-    el.classList.add("hidden");
-  });
-  sections[id].classList.remove("hidden");
-  sections[id].classList.add("active");
+function imageFor(i) {
+  return customImages[i] || fallbackImages[i] || fallbackImages[0];
+}
+function pimageFor(i) {
+  return personalImages[i] || fallbackImages[i] || fallbackImages[0];
 }
 
-function imageFor(index) {
-  return customImages[index] || fallbackImages[index] || fallbackImages[0];
+function addPhoto(container, src, alt, klass = "") {
+  const el = document.createElement("article");
+  el.className = `photo-card reveal ${klass}`;
+  el.innerHTML = `<img src="${src}" alt="${alt}" onerror="this.onerror=null;this.src='${fallbackImages[0]}'"/>`;
+  container.appendChild(el);
 }
 
-function pimageFor(index) {
-  return personalImages[index] || fallbackImages[index] || fallbackImages[0];
+function build() {
+  document.getElementById("heroBg").src = imageFor(10);
+  document.getElementById("togetherPhoto").src = imageFor(8);
+  document.getElementById("endingPhoto").src = imageFor(10);
+
+  const left = document.getElementById("leftPhotos");
+  const right = document.getElementById("rightPhotos");
+  for (let i = 0; i < 4; i++) {
+    addPhoto(left, pimageFor(i), `My photo ${i + 1}`, i % 2 ? "rot-r" : "rot-l");
+    addPhoto(right, pimageFor(i + 2), `Lover photo ${i + 1}`, i % 2 ? "rot-l" : "rot-r");
+  }
+
+  const mLeft = document.getElementById("mergeLeft");
+  const mRight = document.getElementById("mergeRight");
+  for (let i = 0; i < 3; i++) {
+    addPhoto(mLeft, pimageFor(i), `Merge left ${i + 1}`);
+    addPhoto(mRight, pimageFor(i + 3), `Merge right ${i + 1}`);
+  }
+
+  const masonry = document.getElementById("masonry");
+  for (let i = 0; i < 9; i++) {
+    const cap = captions[i % captions.length];
+    const card = document.createElement("article");
+    card.className = `masonry-item reveal ${i % 3 === 0 ? "tall" : ""}`;
+    card.innerHTML = `<img src="${imageFor(i)}" alt="Memory ${i + 1}" onerror="this.onerror=null;this.src='${fallbackImages[0]}'"/><span>${cap}</span>`;
+    masonry.appendChild(card);
+  }
 }
 
-function renderWheel() {
-  const nodes = cardData
-    .map((card, i) => {
-      const angle = (360 / cardData.length) * i;
-      const fallback = personalImages || personalImages[0];
-      return `<div class="wheel-item" style="--angle:${angle}deg"><img src="${pimageFor(i)}" alt="${card.title}" onerror="this.onerror=null;this.src='${fallback}'" /></div>`;
-    })
-    .join("");
-  photoWheel.innerHTML = nodes;
-}
-
-function renderSlides() {
-  storySlides.innerHTML = cardData
-    .map((card, i) => {
-      const fallback = fallbackImages[i] || fallbackImages[0];
-      return `<div class="swiper-slide"><article class="love-slide"><img class="slide-bg portrait" src="${imageFor(i)}" alt="${card.title}" onerror="this.onerror=null;this.src='${fallback}'" /><div class="slide-overlay"></div><div class="slide-content" data-swiper-parallax="-120"><h3>${card.title}</h3><p>${card.message}</p></div></article></div>`;
-    })
-    .join("");
-}
-
-function initSwiper() {
-  renderSlides();
-  swiperInstance = new Swiper("#loveSwiper", {
-    effect: "creative",
-    speed: 900,
-    loop: true,
-    centeredSlides: true,
-    slidesPerView: 1,
-    grabCursor: true,
-    parallax: true,
-    creativeEffect: {
-      prev: { shadow: true, translate: ["-120%", 0, -500], rotate: [0, -20, 0], opacity: 0.45 },
-      next: { shadow: true, translate: ["120%", 0, -500], rotate: [0, 20, 0], opacity: 0.45 },
+function initReveal() {
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => e.isIntersecting && e.target.classList.add("show"));
     },
-    autoplay: { delay: 3200, disableOnInteraction: false, pauseOnMouseEnter: true },
-    pagination: { el: ".swiper-pagination", clickable: true },
-    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-  });
+    { threshold: 0.16 }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 }
 
-function launchConfetti(duration = 2600) {
-  const canvas = document.getElementById("confettiCanvas");
+function typeWriter(text, i = 0) {
+  const target = document.getElementById("typewriter");
+  if (i === 0) target.textContent = "";
+  if (i < text.length) {
+    target.textContent += text[i];
+    setTimeout(() => typeWriter(text, i + 1), 38);
+  }
+}
+
+function confettiHearts(duration = 2200) {
+  const canvas = document.getElementById("fxCanvas");
   const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const particles = Array.from({ length: 120 }, () => ({
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  const particles = Array.from({ length: 90 }, () => ({
     x: Math.random() * canvas.width,
-    y: Math.random() * -canvas.height,
-    r: Math.random() * 5 + 3,
-    d: Math.random() * 3 + 2,
-    c: ["#f9518d", "#ffd166", "#ffffff", "#c77dff"][Math.floor(Math.random() * 4)],
+    y: canvas.height + Math.random() * 50,
+    s: Math.random() * 9 + 6,
+    v: Math.random() * 2 + 1,
+    a: Math.random() * Math.PI,
   }));
-
-  let raf;
   const start = performance.now();
+  let raf;
+
+  function heart(x, y, size) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(size / 18, size / 18);
+    ctx.fillStyle = "#f85a9f";
+    ctx.beginPath();
+    ctx.moveTo(0, 6);
+    ctx.bezierCurveTo(0, 0, -10, 0, -10, 6);
+    ctx.bezierCurveTo(-10, 12, 0, 18, 0, 18);
+    ctx.bezierCurveTo(0, 18, 10, 12, 10, 6);
+    ctx.bezierCurveTo(10, 0, 0, 0, 0, 6);
+    ctx.fill();
+    ctx.restore();
+  }
+
   function frame(t) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of particles) {
-      p.y += p.d;
-      p.x += Math.sin(p.y * 0.02);
-      if (p.y > canvas.height + 10) p.y = -10;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.c;
-      ctx.fill();
-    }
+    particles.forEach((p) => {
+      p.y -= p.v;
+      p.x += Math.sin(p.a) * 1.1;
+      p.a += 0.06;
+      heart(p.x, p.y, p.s);
+    });
     if (t - start < duration) raf = requestAnimationFrame(frame);
     else {
       cancelAnimationFrame(raf);
@@ -132,19 +139,31 @@ function launchConfetti(duration = 2600) {
   raf = requestAnimationFrame(frame);
 }
 
-renderWheel();
-initSwiper();
+function setupAudio() {
+  const audio = document.getElementById("bgMusic");
+  const btn = document.getElementById("musicToggle");
+  audio.src = customAudio;
+  btn.addEventListener("click", async () => {
+    try {
+      if (audio.paused) {
+        await audio.play();
+        btn.textContent = "🎵 Music: On";
+      } else {
+        audio.pause();
+        btn.textContent = "🎵 Music: Off";
+      }
+    } catch {
+      btn.textContent = "🎵 Add your audio file";
+    }
+  });
+}
 
-document.getElementById("startJourney").addEventListener("click", () => {
-  showSection("story");
-  swiperInstance?.autoplay?.start();
-});
+build();
+initReveal();
+setupAudio();
+typeWriter("Every moment with you feels magical. You are my today and all my tomorrows ❤️");
 
-document.getElementById("showFinal").addEventListener("click", () => {
-  showSection("final");
-  launchConfetti();
-});
-
-document.getElementById("restartJourney").addEventListener("click", () => {
-  showSection("landing");
+document.getElementById("foreverBtn").addEventListener("click", () => {
+  document.getElementById("finalQuote").classList.remove("hidden");
+  confettiHearts();
 });
