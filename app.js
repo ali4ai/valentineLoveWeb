@@ -165,7 +165,9 @@ function setupMemoryLightbox() {
   const lightboxImg = document.getElementById("lightboxImg");
 
   masonry.addEventListener("click", (e) => {
-    const img = e.target.closest("img");
+    const item = e.target.closest(".masonry-item");
+    if (!item) return;
+    const img = item.querySelector("img");
     if (!img) return;
     lightboxImg.src = img.currentSrc || img.src;
     lightbox.classList.remove("hidden");

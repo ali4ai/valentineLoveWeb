@@ -228,3 +228,7 @@ body {
   border: 1px solid rgba(255,255,255,0.45);
   box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
+
+.lightbox.hidden {
+  display: none;
+}
