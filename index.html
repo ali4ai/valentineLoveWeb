@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Love Story ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <audio id="bgMusic" loop></audio>
+
+    <button id="musicToggle" class="music-btn">🎵 Music: Off</button>
+
+    <section class="hero full-screen" id="hero">
+      <img id="heroBg" class="hero-bg" alt="Together background" />
+      <div class="overlay"></div>
+      <div class="floating-hearts" aria-hidden="true"></div>
+      <div class="hero-content fade-in">
+        <h1>Our Love Story ❤️</h1>
+        <h2>Valentine 2026</h2>
+        <p>Two hearts… One destiny</p>
+      </div>
+    </section>
+
+    <section class="split-gallery section">
+      <div class="side">
+        <h3>My World</h3>
+        <div id="leftPhotos" class="polaroid-grid"></div>
+      </div>
+      <div class="center-text">Two different journeys that led to each other ❤️</div>
+      <div class="side">
+        <h3>Your World</h3>
+        <div id="rightPhotos" class="polaroid-grid"></div>
+      </div>
+    </section>
+
+    <section class="merge section">
+      <div id="mergeLeft" class="merge-col"></div>
+      <div class="heart-frame pulse">
+        <img id="togetherPhoto" alt="Together" />
+      </div>
+      <div id="mergeRight" class="merge-col"></div>
+      <div class="sparkles" aria-hidden="true"></div>
+    </section>
+
+    <section class="memory section">
+      <h3>Memory Gallery</h3>
+      <div id="masonry" class="masonry"></div>
+    </section>
+
+    <section class="message section">
+      <article class="letter">
+        <h3>Love Message 💌</h3>
+        <p id="typewriter"></p>
+      </article>
+      <div class="petals" aria-hidden="true"></div>
+    </section>
+
+    <section class="ending section">
+      <div class="big-heart pulse">
+        <img id="endingPhoto" alt="Forever us" />
+      </div>
+      <button id="foreverBtn" class="primary-btn">Forever Us</button>
+      <p id="finalQuote" class="hidden">“Every road in my life leads to you. Forever begins with us.” ❤️</p>
+    </section>
+
+    <canvas id="fxCanvas"></canvas>
+    <div id="lightbox" class="lightbox hidden" aria-hidden="true">
+      <img id="lightboxImg" alt="Memory fullscreen" />
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
