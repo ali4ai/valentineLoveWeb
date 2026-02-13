@@ -31,11 +31,11 @@ const defaultPortraits = [
 ];
 
 const customPortraits = [
-  "images/cards/card1.png",
-  "images/cards/card2.png",
-  "images/cards/card3.png",
-  "images/cards/card4.png",
-  "images/cards/card5.png",
+  "images/cards/card1.jpg",
+  "images/cards/card2.jpg",
+  "images/cards/card3.jpg",
+  "images/cards/card4.jpg",
+  "images/cards/card5.jpg",
 ];
 
 const sections = {
