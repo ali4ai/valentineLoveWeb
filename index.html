@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Future Wife Sumia ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-hearts" aria-hidden="true"></div>
+    <audio id="bgMusic" loop>
+      <source
+        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f4f03f063.mp3?filename=beautiful-piano-ambient-116199.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <header class="top-bar">
+      <button id="musicToggle" class="ghost-btn" aria-label="Toggle music">🎵 Music: Off</button>
+    </header>
+
+    <main>
+      <section id="landing" class="section active center">
+        <h1>For My Future Wife Sumia ❤️</h1>
+        <p>A small digital journey made with love by Ali.</p>
+        <p class="small-text">Curiosity → Romance → Memories → Interaction → Surprise 💍</p>
+        <button id="startJourney" class="primary-btn">Start Our Love Journey</button>
+      </section>
+
+      <section id="story" class="section center hidden">
+        <div class="card story-card" id="storyCard"></div>
+        <div class="row gap-sm">
+          <button id="prevStory" class="ghost-btn">Previous</button>
+          <button id="nextStory" class="primary-btn">Next</button>
+        </div>
+      </section>
+
+      <section id="memories" class="section hidden">
+        <h2>Our Memories & Love Notes</h2>
+        <div class="memory-grid">
+          <article class="glass">
+            <h3>Love Letter</h3>
+            <p id="typewriter"></p>
+          </article>
+          <article class="glass">
+            <h3>Days Together</h3>
+            <p id="daysTogether">Loading…</p>
+          </article>
+          <article class="glass">
+            <h3>Love Meter</h3>
+            <div class="meter-wrap"><div id="loveMeter" class="meter"></div></div>
+            <p>Love Level: 100% • Trust Level: Infinite ♾️</p>
+          </article>
+        </div>
+
+        <h3>Portrait Memories</h3>
+        <div id="portraitGallery" class="portrait-gallery"></div>
+
+        <button id="toQuestions" class="primary-btn">Continue to Questions</button>
+      </section>
+
+      <section id="questionnaire" class="section center hidden">
+        <h2>Our Relationship Questionnaire 💌</h2>
+        <p id="questionSectionTag" class="question-section-tag"></p>
+        <div class="progress-wrap"><div id="progressBar"></div></div>
+        <div class="question-card glass">
+          <p id="questionText"></p>
+          <div id="answerInputWrap"></div>
+        </div>
+        <div id="emojiReaction" class="emoji-reaction">😊</div>
+        <div class="row gap-sm">
+          <button id="prevQuestion" class="ghost-btn">Back</button>
+          <button id="nextQuestion" class="primary-btn">Next</button>
+        </div>
+      </section>
+
+      <section id="ending" class="section center hidden">
+        <div class="glass final">
+          <h2>Final Surprise 💍</h2>
+          <p id="compiledMessage"></p>
+          <h3>Sumia, every line of code in my life leads to you.</h3>
+          <p>Will you stay my forever Valentine and future wife?</p>
+          <div id="successStatus"></div>
+          <button id="restartJourney" class="ghost-btn">Replay Journey</button>
+        </div>
+      </section>
+    </main>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
