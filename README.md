@@ -4,9 +4,9 @@ This version is focused on:
 
 - A modern, responsive 11-card romantic slider
 - Elegant love messages on each slide
-- Portrait image support (`card1.jpg` ... `card11.jpg`)
+- Portrait image support for slider cards (`card1.png` ... `card11.png`)
+- Bigger rotating circular wheel images on landing screen
 - Arrows, pagination dots, autoplay, hover pause, and touch swipe
-- A rotating circular photo wheel on the landing screen
 - Final romantic message reveal
 
 ## Run locally
@@ -17,20 +17,29 @@ python3 -m http.server 4173
 
 Open: `http://localhost:4173`
 
-## Add your portrait cards
+## Add your images
 
-Place your images in:
+Slider cards (portrait):
 
-- `images/cards/card1.jpg`
-- `images/cards/card2.jpg`
-- `images/cards/card3.jpg`
-- `images/cards/card4.jpg`
-- `images/cards/card5.jpg`
-- `images/cards/card6.jpg`
-- `images/cards/card7.jpg`
-- `images/cards/card8.jpg`
-- `images/cards/card9.jpg`
-- `images/cards/card10.jpg`
-- `images/cards/card11.jpg`
+- `images/cards/card1.png`
+- `images/cards/card2.png`
+- `images/cards/card3.png`
+- `images/cards/card4.png`
+- `images/cards/card5.png`
+- `images/cards/card6.png`
+- `images/cards/card7.png`
+- `images/cards/card8.png`
+- `images/cards/card9.png`
+- `images/cards/card10.png`
+- `images/cards/card11.png`
+
+Landing wheel (personal):
+
+- `images/personal/card1.jpg`
+- `images/personal/card2.jpg`
+- `images/personal/card3.jpg`
+- `images/personal/card4.jpg`
+- `images/personal/card5.jpg`
+- `images/personal/card6.jpg`
 
 If files are missing, fallback romantic images are shown automatically.

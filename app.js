@@ -12,7 +12,9 @@ const cardData = [
   { title: "❤️ My Forever Valentine", message: "You are my today, tomorrow, and forever." },
 ];
 
-const customImages = Array.from({ length: 11 }, (_, i) => `images/cards/card${i + 1}.jpg`);
+const customImages = Array.from({ length: 11 }, (_, i) => `images/cards/card${i + 1}.png`);
+const personalImages = Array.from({ length: 6 }, (_, i) => `images/personal/card${i + 1}.jpg`);
+
 const fallbackImages = [
   "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1400&q=80",
   "https://images.unsplash.com/photo-1519736709093-9f90a9591489?auto=format&fit=crop&w=1400&q=80",
@@ -50,12 +52,16 @@ function imageFor(index) {
   return customImages[index] || fallbackImages[index] || fallbackImages[0];
 }
 
+function pimageFor(index) {
+  return personalImages[index] || fallbackImages[index] || fallbackImages[0];
+}
+
 function renderWheel() {
   const nodes = cardData
     .map((card, i) => {
       const angle = (360 / cardData.length) * i;
-      const fallback = fallbackImages[i] || fallbackImages[0];
-      return `<div class="wheel-item" style="--angle:${angle}deg"><img src="${imageFor(i)}" alt="${card.title}" onerror="this.onerror=null;this.src='${fallback}'" /></div>`;
+      const fallback = personalImages || personalImages[0];
+      return `<div class="wheel-item" style="--angle:${angle}deg"><img src="${pimageFor(i)}" alt="${card.title}" onerror="this.onerror=null;this.src='${fallback}'" /></div>`;
     })
     .join("");
   photoWheel.innerHTML = nodes;
