@@ -158,7 +158,29 @@ function setupAudio() {
   });
 }
 
+
+function setupMemoryLightbox() {
+  const masonry = document.getElementById("masonry");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+
+  masonry.addEventListener("click", (e) => {
+    const img = e.target.closest("img");
+    if (!img) return;
+    lightboxImg.src = img.currentSrc || img.src;
+    lightbox.classList.remove("hidden");
+    lightbox.setAttribute("aria-hidden", "false");
+  });
+
+  lightbox.addEventListener("click", () => {
+    lightbox.classList.add("hidden");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.src = "";
+  });
+}
+
 build();
+setupMemoryLightbox();
 initReveal();
 setupAudio();
 typeWriter("Every moment with you feels magical. You are my today and all my tomorrows ❤️");
