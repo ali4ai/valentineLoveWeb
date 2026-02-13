@@ -22,6 +22,22 @@ if (isFirebaseConfigured) {
   db = getFirestore(app);
 }
 
+const defaultPortraits = [
+  "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1519736709093-9f90a9591489?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
+];
+
+const customPortraits = [
+  "images/cards/card1.jpg",
+  "images/cards/card2.jpg",
+  "images/cards/card3.jpg",
+  "images/cards/card4.jpg",
+  "images/cards/card5.jpg",
+];
+
 const sections = {
   landing: document.getElementById("landing"),
   story: document.getElementById("story"),
@@ -63,6 +79,8 @@ const questions = [
   "Are you ready for lifetime debugging with me?",
 ];
 
+const answerEmojis = ["🥰", "💭", "❤️", "👩‍💻", "💘", "🏡", "💍"];
+
 const answers = Array(questions.length).fill("");
 let storyIndex = 0;
 let questionIndex = 0;
@@ -78,6 +96,8 @@ const compiledMessage = document.getElementById("compiledMessage");
 const successStatus = document.getElementById("successStatus");
 const musicToggle = document.getElementById("musicToggle");
 const bgMusic = document.getElementById("bgMusic");
+const portraitGallery = document.getElementById("portraitGallery");
+const emojiReaction = document.getElementById("emojiReaction");
 
 function showSection(id) {
   Object.values(sections).forEach((el) => {
@@ -88,13 +108,36 @@ function showSection(id) {
   sections[id].classList.add("active");
 }
 
+function safePortrait(index) {
+  return customPortraits[index] || defaultPortraits[index] || defaultPortraits[0];
+}
+
 function renderStory() {
   const card = storyCards[storyIndex];
-  storyCard.innerHTML = `<h2>${card.title}</h2><p>${card.body}</p><p><strong>Card ${storyIndex + 1}/${storyCards.length}</strong></p>`;
+  storyCard.innerHTML = `
+    <div class="story-image-wrap">
+      <img src="${safePortrait(storyIndex)}" alt="Love memory card ${storyIndex + 1}" loading="lazy" onerror="this.onerror=null;this.src='${defaultPortraits[storyIndex] || defaultPortraits[0]}'" />
+    </div>
+    <div class="story-content">
+      <h2>${card.title}</h2>
+      <p>${card.body}</p>
+      <p><strong>Card ${storyIndex + 1}/${storyCards.length}</strong></p>
+    </div>`;
+}
+
+function renderPortraitGallery() {
+  portraitGallery.innerHTML = storyCards
+    .map(
+      (_, idx) =>
+        `<div class="portrait-card"><img src="${safePortrait(idx)}" alt="Memory portrait ${idx + 1}" loading="lazy" onerror="this.onerror=null;this.src='${defaultPortraits[idx] || defaultPortraits[0]}'" /></div>`
+    )
+    .join("");
 }
 
 function animateTypewriter(text, i = 0) {
-  if (i === 0) typewriter.textContent = "";
+  if (i === 0) {
+    typewriter.textContent = "";
+  }
   if (i < text.length) {
     typewriter.textContent += text[i];
     setTimeout(() => animateTypewriter(text, i + 1), 28);
@@ -109,6 +152,7 @@ function setupMemories() {
   animateTypewriter(
     "You are my favorite notification, my best algorithm, and my forever person. Every chapter with you is my favorite one."
   );
+  renderPortraitGallery();
   setTimeout(() => {
     loveMeter.style.width = "100%";
   }, 300);
@@ -118,12 +162,13 @@ function renderQuestion() {
   questionText.textContent = questions[questionIndex];
   answerInput.value = answers[questionIndex] || "";
   progressBar.style.width = `${((questionIndex + 1) / questions.length) * 100}%`;
+  emojiReaction.textContent = answerEmojis[questionIndex] || "😊";
 }
 
 async function saveResponses() {
   const payload = {
     partnerName: "Sumia",
-    answers: Object.fromEntries(questions.map((q, i) => [`q${i + 1}`, answers[i]])),
+    answers: Object.fromEntries(questions.map((_, i) => [`q${i + 1}`, answers[i]])),
     submittedAt: isFirebaseConfigured ? serverTimestamp() : new Date().toISOString(),
     deviceInfo: navigator.userAgent,
   };
@@ -159,14 +204,17 @@ function launchConfetti(duration = 3500) {
     for (const p of particles) {
       p.y += p.d;
       p.x += Math.sin(p.y * 0.02);
-      if (p.y > canvas.height + 10) p.y = -10;
+      if (p.y > canvas.height + 10) {
+        p.y = -10;
+      }
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = p.c;
       ctx.fill();
     }
-    if (t - start < duration) raf = requestAnimationFrame(frame);
-    else {
+    if (t - start < duration) {
+      raf = requestAnimationFrame(frame);
+    } else {
       cancelAnimationFrame(raf);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -232,6 +280,12 @@ document.getElementById("nextQuestion").addEventListener("click", async () => {
     successStatus.textContent = "I couldn't upload right now, but the love is still valid forever ❤️";
     console.error(err);
   }
+});
+
+document.getElementById("restartJourney").addEventListener("click", () => {
+  storyIndex = 0;
+  questionIndex = 0;
+  showSection("landing");
 });
 
 musicToggle.addEventListener("click", async () => {

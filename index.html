@@ -15,7 +15,10 @@
   <body>
     <div class="bg-hearts" aria-hidden="true"></div>
     <audio id="bgMusic" loop>
-      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f4f03f063.mp3?filename=beautiful-piano-ambient-116199.mp3" type="audio/mpeg" />
+      <source
+        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4f4f03f063.mp3?filename=beautiful-piano-ambient-116199.mp3"
+        type="audio/mpeg"
+      />
     </audio>
 
     <header class="top-bar">
@@ -26,11 +29,12 @@
       <section id="landing" class="section active center">
         <h1>For My Future Wife Sumia ❤️</h1>
         <p>A small digital journey made with love by Ali.</p>
+        <p class="small-text">Curiosity → Romance → Memories → Interaction → Surprise 💍</p>
         <button id="startJourney" class="primary-btn">Start Our Love Journey</button>
       </section>
 
       <section id="story" class="section center hidden">
-        <div class="card" id="storyCard"></div>
+        <div class="card story-card" id="storyCard"></div>
         <div class="row gap-sm">
           <button id="prevStory" class="ghost-btn">Previous</button>
           <button id="nextStory" class="primary-btn">Next</button>
@@ -54,6 +58,10 @@
             <p>Love Level: 100% • Trust Level: Infinite ♾️</p>
           </article>
         </div>
+
+        <h3>Portrait Memories</h3>
+        <div id="portraitGallery" class="portrait-gallery"></div>
+
         <button id="toQuestions" class="primary-btn">Continue to Questions</button>
       </section>
 
@@ -64,6 +72,7 @@
           <p id="questionText"></p>
           <input id="answerInput" type="text" placeholder="Type your answer..." />
         </div>
+        <div id="emojiReaction" class="emoji-reaction">😊</div>
         <div class="row gap-sm">
           <button id="prevQuestion" class="ghost-btn">Back</button>
           <button id="nextQuestion" class="primary-btn">Next</button>
@@ -77,6 +86,7 @@
           <h3>Sumia, every line of code in my life leads to you.</h3>
           <p>Will you stay my forever Valentine and future wife?</p>
           <div id="successStatus"></div>
+          <button id="restartJourney" class="ghost-btn">Replay Journey</button>
         </div>
       </section>
     </main>
